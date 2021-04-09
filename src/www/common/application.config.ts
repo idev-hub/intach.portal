@@ -4,6 +4,7 @@ import {CommonRoutesConfig} from "./common.routes.config";
 import bodyParser from "body-parser";
 import {InstitutionsRoutes} from "../routes/institutions.routes";
 import {createConnection} from "typeorm";
+import {LessonsRoutes} from "../routes/lessons.routes";
 
 export default class ApplicationConfig {
     express: express.Application = express()
@@ -16,6 +17,7 @@ export default class ApplicationConfig {
         this.express.use(bodyParser.json())
 
         this.routes.push(new InstitutionsRoutes(this.express))
+        this.routes.push(new LessonsRoutes(this.express))
     }
 
     /*
@@ -25,6 +27,8 @@ export default class ApplicationConfig {
         this.express.listen(this.port, () => {
             console.log("Server running on port:", this.port)
             createConnection().catch(error => console.log(error))
+            
+            console.log(new Date())
         })
     }
 }
